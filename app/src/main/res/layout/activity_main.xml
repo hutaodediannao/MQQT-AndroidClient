@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gainsboro"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@android:color/holo_red_light"
+        android:gravity="center"
+        android:text="胡氏智能物联网"
+        android:textColor="@android:color/white"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/layLed"
+        android:layout_below="@+id/header"
+        android:layout_margin="20dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:id="@+id/tvCb"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:clickable="false"
+            android:background="@drawable/led_status_selector"
+            android:button="@null" />
+
+        <TextView
+            android:id="@+id/tvLed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="客厅灯:打开"
+            android:textColor="@color/dimgrey"
+            android:textSize="12sp"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</RelativeLayout>
