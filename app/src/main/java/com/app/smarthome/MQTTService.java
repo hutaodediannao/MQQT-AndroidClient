@@ -102,7 +102,6 @@ public class MQTTService extends Service {
         client = new MqttAndroidClient(this, uri, clientId);
         // 设置MQTT监听并且接受消息
         client.setCallback(mqttCallback);
-
         conOpt = new MqttConnectOptions();
         // 清除缓存
         conOpt.setCleanSession(true);
@@ -166,10 +165,25 @@ public class MQTTService extends Service {
         @Override
         public void onFailure(IMqttToken arg0, Throwable arg1) {
             arg1.printStackTrace();
-            iMqMsgCallback.connectFailed();
             // 连接失败，重连
+            if (isConnectIsNormal()) {
+                connect();
+            } else {
+                iMqMsgCallback.connectFailed();
+            }
+
         }
     };
+
+    public void connect(){
+        try {
+            iMqMsgCallback.connectIng();
+            client.connect();
+        } catch (MqttException e) {
+            e.printStackTrace();
+            iMqMsgCallback.connectFailed();
+        }
+    }
 
     /**
      * 判断网络是否连接

@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements IMQMsgCallBack {
     private ProgressDialog loadingDialog;
 
     private void setListener() {
+        layLed.setEnabled(false);
         layLed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements IMQMsgCallBack {
     public void connectIng() {
         loadingDialog = ProgressDialog.show(MainActivity.this, "状态更新", "正在连接服务器...");
         loadingDialog.show();
+        layLed.setEnabled(false);
     }
 
     @Override
@@ -72,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements IMQMsgCallBack {
         if (loadingDialog != null) {
             loadingDialog.dismiss();
         }
+        layLed.setEnabled(true);
     }
 
     @Override
@@ -79,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements IMQMsgCallBack {
         if (loadingDialog != null) {
             loadingDialog.dismiss();
         }
+        layLed.setEnabled(false);
     }
 
     @Override
@@ -105,6 +109,8 @@ public class MainActivity extends AppCompatActivity implements IMQMsgCallBack {
         if (loadingDialog != null) {
             loadingDialog.dismiss();
         }
+        layLed.setEnabled(false);
+        serviceConnection.getMqttService().connect();
     }
 
     @Override
