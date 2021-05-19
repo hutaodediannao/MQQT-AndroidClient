@@ -17,35 +17,74 @@
         android:textSize="17sp"
         android:textStyle="bold" />
 
-    <LinearLayout
-        android:id="@+id/layLed"
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/header"
-        android:layout_margin="20dp"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:columnCount="3"
+        android:rowCount="3">
 
-        <CheckBox
-            android:id="@+id/tvCb"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:clickable="false"
-            android:background="@drawable/led_status_selector"
-            android:button="@null" />
-
-        <TextView
-            android:id="@+id/tvLed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:id="@+id/layLed"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_columnWeight="1"
+            android:layout_below="@+id/header"
+            android:layout_margin="20dp"
+            android:background="@color/white"
             android:gravity="center"
-            android:text="客厅灯:打开"
-            android:textColor="@color/dimgrey"
-            android:textSize="12sp"
-            android:layout_marginTop="5dp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <CheckBox
+                android:id="@+id/tvCb"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/led_status_selector"
+                android:button="@null"
+                android:clickable="false" />
+
+            <TextView
+                android:id="@+id/tvLed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="客厅灯:打开"
+                android:textColor="@color/dimgrey"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layDigital"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_columnWeight="1"
+            android:layout_below="@+id/header"
+            android:layout_margin="20dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <SeekBar
+                android:id="@+id/appCompatSeekBar"
+                android:layout_width="match_parent"
+                android:layout_height="80dp" />
+
+            <TextView
+                android:id="@+id/tvDigital"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="空调温度:"
+                android:textColor="@color/dimgrey"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </GridLayout>
 
 </RelativeLayout>

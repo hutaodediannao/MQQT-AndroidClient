@@ -1,6 +1,7 @@
 package com.app.smarthome;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatSeekBar;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +18,8 @@ public class MainActivity extends AppCompatActivity implements IMQMsgCallBack {
 
     private LinearLayout layLed;
     private CheckBox ledCb;
-    private TextView tvLed;
+    private TextView tvLed, tvDigital;
+    private SeekBar appCompatSeekBar;
     private MyServiceConnection serviceConnection;
 
     @Override
@@ -54,12 +57,32 @@ public class MainActivity extends AppCompatActivity implements IMQMsgCallBack {
                 serviceConnection.getMqttService().publish(status);
             }
         });
+        appCompatSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                //发送进度
+                int pro = seekBar.getProgress() * 180 / 100;
+                serviceConnection.getMqttService().publish(Integer.toString(pro));
+            }
+        });
     }
 
     private void initView() {
         layLed = findViewById(R.id.layLed);
         ledCb = findViewById(R.id.tvCb);
         tvLed = findViewById(R.id.tvLed);
+        tvDigital = findViewById(R.id.tvDigital);
+        appCompatSeekBar = findViewById(R.id.appCompatSeekBar);
     }
 
     @Override
@@ -87,19 +110,24 @@ public class MainActivity extends AppCompatActivity implements IMQMsgCallBack {
 
     @Override
     public void setMessage(String message) {
-        loadingDialog.dismiss();
+        if (loadingDialog != null) {
+            loadingDialog.dismiss();
+        }
         switch (message) {
             case "0":
+                tvDigital.setText("空调温度：0℃");
                 tvLed.setText("客厅灯:开启");
                 ledCb.setChecked(false);
                 tvLed.setTextColor(getColor(R.color.dimgrey));
                 break;
             case "1":
+                tvDigital.setText("空调温度：1℃");
                 tvLed.setText("客厅灯:关闭");
                 ledCb.setChecked(true);
                 tvLed.setTextColor(getColor(R.color.firebrick));
                 break;
             default:
+                tvDigital.setText("空调温度：" + Integer.parseInt(message) * 50 / 180 + "℃");
                 break;
         }
     }
