@@ -20,6 +20,9 @@ public class MainActivity extends AppCompatActivity implements IMQMsgCallBack {
     private CheckBox ledCb;
     private TextView tvLed, tvDigital;
     private SeekBar appCompatSeekBar;
+    private LinearLayout layLedLeft;
+    private LinearLayout layLedRight;
+    private LinearLayout layLedLR;
     private MyServiceConnection serviceConnection;
 
     @Override
@@ -75,6 +78,24 @@ public class MainActivity extends AppCompatActivity implements IMQMsgCallBack {
                 serviceConnection.getMqttService().publish(Integer.toString(pro));
             }
         });
+        layLedLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serviceConnection.getMqttService().publish("4");
+            }
+        });
+        layLedRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serviceConnection.getMqttService().publish("5");
+            }
+        });
+        layLedLR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serviceConnection.getMqttService().publish("6");
+            }
+        });
     }
 
     private void initView() {
@@ -83,6 +104,9 @@ public class MainActivity extends AppCompatActivity implements IMQMsgCallBack {
         tvLed = findViewById(R.id.tvLed);
         tvDigital = findViewById(R.id.tvDigital);
         appCompatSeekBar = findViewById(R.id.appCompatSeekBar);
+        layLedLeft = findViewById(R.id.layLedLeft);
+        layLedRight = findViewById(R.id.layLedRight);
+        layLedLR = findViewById(R.id.layLedLR);
     }
 
     @Override
