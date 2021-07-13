@@ -79,21 +79,23 @@ public class MQTTService extends Service {
     /**
      * 发布消息
      */
-    public void publish(String msg) {
-        String topic = mTopic;
+    public void publish(String topic, String msg) {
         Integer qos = 0;
         Boolean retained = false;
         try {
-
             boolean isConnected = client.isConnected();
             boolean isConnectNet = isConnectIsNormal();
 
             if (client != null && isConnected && isConnectNet) {
-                client.publish(topic, msg.getBytes(), qos.intValue(), retained.booleanValue());
+                client.publish(topic == null ? mTopic : topic, msg.getBytes(), qos.intValue(), retained.booleanValue());
             }
         } catch (MqttException e) {
             e.printStackTrace();
         }
+    }
+
+    public void publish(String msg) {
+        this.publish(null, msg);
     }
 
     private void init() {
@@ -175,7 +177,7 @@ public class MQTTService extends Service {
         }
     };
 
-    public void connect(){
+    public void connect() {
         try {
             iMqMsgCallback.connectIng();
             client.connect();

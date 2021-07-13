@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -18,11 +19,15 @@ public class MainActivity extends AppCompatActivity implements IMQMsgCallBack {
 
     private LinearLayout layLed;
     private CheckBox ledCb;
+    private ImageView ivLz;
     private TextView tvLed, tvDigital;
     private SeekBar appCompatSeekBar;
     private LinearLayout layLedLeft;
     private LinearLayout layLedRight;
     private LinearLayout layLedLR;
+    private LinearLayout layLedMusic;
+    private LinearLayout layLedSz;
+    private LinearLayout layLaZhu;
     private MyServiceConnection serviceConnection;
 
     @Override
@@ -96,17 +101,49 @@ public class MainActivity extends AppCompatActivity implements IMQMsgCallBack {
                 serviceConnection.getMqttService().publish("6");
             }
         });
+        layLedMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serviceConnection.getMqttService().publish("7");
+            }
+        });
+        layLedSz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serviceConnection.getMqttService().publish("8");
+            }
+        });
+        layLaZhu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //给蜡烛主题发送msg指令,可以远程控制蜡烛开关
+                if (mLzStatus.equals("5")) {
+                    mLzStatus = "175";
+                    ivLz.setImageResource(R.mipmap.lz);
+                } else {
+                    mLzStatus = "5";
+                    ivLz.setImageResource(R.mipmap.lz_off);
+                }
+                serviceConnection.getMqttService().publish("client-wifi-topic", mLzStatus);
+            }
+        });
     }
+
+    String mLzStatus = "5";//标识给舵机传递的角度
 
     private void initView() {
         layLed = findViewById(R.id.layLed);
         ledCb = findViewById(R.id.tvCb);
+        ivLz = findViewById(R.id.ivLz);
         tvLed = findViewById(R.id.tvLed);
         tvDigital = findViewById(R.id.tvDigital);
         appCompatSeekBar = findViewById(R.id.appCompatSeekBar);
         layLedLeft = findViewById(R.id.layLedLeft);
         layLedRight = findViewById(R.id.layLedRight);
         layLedLR = findViewById(R.id.layLedLR);
+        layLedMusic = findViewById(R.id.layLedMusic);
+        layLedSz = findViewById(R.id.layLedSz);
+        layLaZhu = findViewById(R.id.layLaZhu);
     }
 
     @Override
