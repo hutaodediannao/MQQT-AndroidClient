@@ -18,7 +18,7 @@ import android.widget.Toast;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public class MainActivity extends AppCompatActivity implements IMQMsgCallBack {
+public class MainActivity extends BaseActivity implements IMQMsgCallBack {
 
     private LinearLayout layLed;
     private CheckBox ledCb;
@@ -220,7 +220,10 @@ public class MainActivity extends AppCompatActivity implements IMQMsgCallBack {
         super.onDestroy();
     }
 
-
+    @Override
+    public boolean needRegistEventBus() {
+        return true;
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGetMessage(EventMsg msg) {
@@ -228,4 +231,6 @@ public class MainActivity extends AppCompatActivity implements IMQMsgCallBack {
             serviceConnection.getMqttService().publish("client-wifi-topic", msg.data);
         }
     }
+
+
 }
