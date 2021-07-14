@@ -15,6 +15,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 public class MainActivity extends AppCompatActivity implements IMQMsgCallBack {
 
     private LinearLayout layLed;
@@ -127,6 +130,12 @@ public class MainActivity extends AppCompatActivity implements IMQMsgCallBack {
                 serviceConnection.getMqttService().publish("client-wifi-topic", mLzStatus);
             }
         });
+        findViewById(R.id.layRobot).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, RobotActivity.class));
+            }
+        });
     }
 
     String mLzStatus = "5";//标识给舵机传递的角度
@@ -209,5 +218,14 @@ public class MainActivity extends AppCompatActivity implements IMQMsgCallBack {
         }
         unbindService(serviceConnection);
         super.onDestroy();
+    }
+
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onGetMessage(EventMsg msg) {
+        if (msg.code == 100) {
+            serviceConnection.getMqttService().publish("client-wifi-topic", msg.data);
+        }
     }
 }
