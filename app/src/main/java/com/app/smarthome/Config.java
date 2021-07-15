@@ -8,7 +8,8 @@ package com.app.smarthome;
  */
 public class Config {
 
-    public static final String HOST_URL = "tcp://test.mosquitto.org:1883";
+//    public static final String HOST_URL = "tcp://test.mosquitto.org:1883";
+    public static final String HOST_URL = "tcp://192.168.1.103:61613";//本地cmd命令行ipconfig命令再加上服务器启动的端口就可以了
     public static final String CLIENT_ID = "hutao";
 
 }

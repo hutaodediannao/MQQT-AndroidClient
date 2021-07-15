@@ -112,10 +112,10 @@ public class MQTTService extends Service {
         // 心跳包发送间隔，单位：秒
 //        conOpt.setKeepAliveInterval(1);
         // 用户名
-//        conOpt.setUserName(userName);
+        conOpt.setUserName(userName);
         // 密码
         //将字符串转换为字符串数组
-//        conOpt.setPassword(passWord.toCharArray());
+        conOpt.setPassword(passWord.toCharArray());
         doClientConnection();
     }
 

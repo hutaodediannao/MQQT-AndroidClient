@@ -1,6 +1,7 @@
 package com.app.smarthome;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.SeekBar;
 
 import androidx.appcompat.widget.AppCompatSeekBar;
@@ -9,6 +10,7 @@ import org.greenrobot.eventbus.EventBus;
 
 public class RobotActivity extends BaseActivity {
 
+    private static final String TAG = "RobotActivity";
     private AppCompatSeekBar s1, s2, s3, s4;
 
     @Override
@@ -35,22 +37,7 @@ public class RobotActivity extends BaseActivity {
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            switch (seekBar.getId()) {
-                case R.id.s1:
-                    EventBus.getDefault().post(new EventMsg(100, "A" + progress));
-                    break;
-                case R.id.s2:
-                    EventBus.getDefault().post(new EventMsg(100, "B" + progress));
-                    break;
-                case R.id.s3:
-                    EventBus.getDefault().post(new EventMsg(100, "C" + progress));
-                    break;
-                case R.id.s4:
-                    EventBus.getDefault().post(new EventMsg(100, "D" + progress));
-                    break;
-                default:
-                    break;
-            }
+
         }
 
         @Override
@@ -60,7 +47,27 @@ public class RobotActivity extends BaseActivity {
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-
+            int progress = seekBar.getProgress();
+            switch (seekBar.getId()) {
+                case R.id.s1:
+                    Log.i(TAG, "A" + progress);
+                    EventBus.getDefault().post(new EventMsg(100, "A" + (180-progress)));
+                    break;
+                case R.id.s2:
+                    Log.i(TAG, "B" + progress);
+                    EventBus.getDefault().post(new EventMsg(100, "B" + progress));
+                    break;
+                case R.id.s3:
+                    Log.i(TAG, "C" + progress);
+                    EventBus.getDefault().post(new EventMsg(100, "C" + (180-progress)));
+                    break;
+                case R.id.s4:
+                    Log.i(TAG, "D" + progress);
+                    EventBus.getDefault().post(new EventMsg(100, "D" + progress));
+                    break;
+                default:
+                    break;
+            }
         }
     };
 
